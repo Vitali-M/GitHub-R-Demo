@@ -12,13 +12,23 @@ knitr::opts_chunk$set(echo = TRUE)
 ## R Markdown
 Voici un tableau
 
-```{r cars}
-summary(cars)
+```{r CWsum}
+summary(ChickWeight)
 ```
 
 ## Including Plots
 Et voici un graphique
 
-```{r pressure, echo=FALSE}
-plot(pressure)
+```{r CWplot, echo=FALSE}
+library(ggplot2, quietly = TRUE)
+library(dplyr, quietly = TRUE)
+ChickWeight %>% 
+  ggplot(aes(Time, weight, colour=Diet)) +
+  geom_point() +
+  facet_wrap(~Diet) + 
+  stat_summary(fun.y="mean", geom="line", colour="black") +
+  theme(legend.position = "none") +
+  ggtitle("Chick Weight over Time by Diet") +
+  xlab("Time (days)") +
+  ylab("Weight (grams)")
 ```
